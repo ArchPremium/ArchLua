@@ -1,0 +1,138 @@
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local isMobile = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "ArchPremium"
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+pcall(function()
+	screenGui.Parent = PlayerGui
+end)
+
+local baseSize = isMobile and UDim2.new(0, 300, 0, 370) or UDim2.new(0, 340, 0, 400)
+local basePos = UDim2.new(0.5, -170, 0.5, -200)
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 0, 0, 0)
+mainFrame.Position = basePos
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 5, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.ClipsDescendants = true
+mainFrame.Parent = screenGui
+
+local mainCorner = Instance.new("UICorner")
+mainCorner.CornerRadius = UDim.new(0, 18)
+mainCorner.Parent = mainFrame
+
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(170, 0, 255)
+mainStroke.Transparency = 0.15
+mainStroke.Thickness = 1.5
+mainStroke.Parent = mainFrame
+
+local bgGradient = Instance.new("UIGradient")
+bgGradient.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 5, 30)),
+	ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 10, 50)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(60, 0, 120))
+})
+bgGradient.Rotation = 135
+bgGradient.Parent = mainFrame
+
+-- TOP BAR
+local topBar = Instance.new("Frame")
+topBar.Size = UDim2.new(1, 0, 0, 55)
+topBar.BackgroundTransparency = 1
+topBar.Parent = mainFrame
+
+local logo = Instance.new("TextLabel")
+logo.Size = UDim2.new(0, 36, 0, 36)
+logo.Position = UDim2.new(0, 10, 0.5, -18)
+logo.BackgroundColor3 = Color3.fromRGB(120, 0, 255)
+logo.Text = "A"
+logo.TextScaled = true
+logo.Font = Enum.Font.GothamBold
+logo.TextColor3 = Color3.new(1,1,1)
+logo.Parent = topBar
+
+local logoCorner = Instance.new("UICorner")
+logoCorner.Parent = logo
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(0, 200, 0, 20)
+title.Position = UDim2.new(0, 55, 0, 8)
+title.Text = "ARCHPREMIUM"
+title.TextColor3 = Color3.fromRGB(230, 180, 255)
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.BackgroundTransparency = 1
+title.Parent = topBar
+
+local subtitle = Instance.new("TextLabel")
+subtitle.Size = UDim2.new(0, 200, 0, 16)
+subtitle.Position = UDim2.new(0, 55, 0, 28)
+subtitle.Text = "Premium Panel"
+subtitle.TextColor3 = Color3.fromRGB(150, 100, 200)
+subtitle.Font = Enum.Font.Gotham
+subtitle.TextSize = 12
+subtitle.BackgroundTransparency = 1
+subtitle.Parent = topBar
+
+-- BUTTON CREATOR
+local function createButton(text, order)
+	local btn = Instance.new("TextButton")
+	btn.Size = UDim2.new(1, -20, 0, 50)
+	btn.Position = UDim2.new(0, 10, 0, 60 + (order * 60))
+	btn.Text = text
+	btn.BackgroundColor3 = Color3.fromRGB(25, 5, 45)
+	btn.TextColor3 = Color3.fromRGB(230, 200, 255)
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 14
+	btn.Parent = mainFrame
+	
+	local corner = Instance.new("UICorner")
+	corner.Parent = btn
+	
+	btn.MouseEnter:Connect(function()
+		TweenService:Create(btn, TweenInfo.new(0.2), {
+			BackgroundColor3 = Color3.fromRGB(60, 0, 120)
+		}):Play()
+	end)
+	
+	btn.MouseLeave:Connect(function()
+		TweenService:Create(btn, TweenInfo.new(0.2), {
+			BackgroundColor3 = Color3.fromRGB(25, 5, 45)
+		}):Play()
+	end)
+	
+	btn.MouseButton1Click:Connect(function()
+		print("[ArchPremium] " .. text .. " clicked")
+	end)
+end
+
+createButton("Freeze Trade", 1)
+createButton("Auto Accept", 2)
+createButton("Cancel Trade", 3)
+
+-- FOOTER
+local footer = Instance.new("TextLabel")
+footer.Size = UDim2.new(1, 0, 0, 20)
+footer.Position = UDim2.new(0, 0, 1, -20)
+footer.Text = "Arch"
+footer.TextColor3 = Color3.fromRGB(200, 120, 255)
+footer.BackgroundTransparency = 1
+footer.Font = Enum.Font.GothamBold
+footer.TextSize = 12
+footer.Parent = mainFrame
+
+-- OPEN ANIMATION
+TweenService:Create(mainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back), {
+	Size = baseSize
+}):Play()
