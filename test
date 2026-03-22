@@ -8,7 +8,7 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local isMobile = UserInputService.TouchEnabled and not UserInputService.MouseEnabled
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "ArchPremium"
+screenGui.Name = "ArchHub"
 screenGui.ResetOnSpawn = false
 screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
@@ -98,14 +98,66 @@ logoGrad.Parent = logoContainer
 local logoLabel = Instance.new("TextLabel")
 logoLabel.Size = UDim2.new(1, 0, 1, 0)
 logoLabel.BackgroundTransparency = 1
-logoLabel.Text = "N"
+logoLabel.Text = "A"
 logoLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 logoLabel.TextScaled = true
 logoLabel.Font = Enum.Font.GothamBold
 logoLabel.ZIndex = 5
 logoLabel.Parent = logoContainer
 
-local titleLabel = Instance.new("ArchPremium")
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(0, 120, 0, 22)
+titleLabel.Position = UDim2.new(0, 58, 0, 8)
+titleLabel.BackgroundTransparency = 1
+titleLabel.Text = "ARCH HUB"
+titleLabel.TextColor3 = Color3.fromRGB(220, 150, 255)
+titleLabel.TextScaled = false
+titleLabel.TextSize = isMobile and 14 or 15
+titleLabel.Font = Enum.Font.GothamBold
+titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+titleLabel.ZIndex = 4
+titleLabel.Parent = topBar
+
+local titleGrad = Instance.new("UIGradient")
+titleGrad.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 180, 255)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(160, 60, 255))
+})
+titleGrad.Parent = titleLabel
+
+local subtitleLabel = Instance.new("TextLabel")
+subtitleLabel.Size = UDim2.new(0, 170, 0, 16)
+subtitleLabel.Position = UDim2.new(0, 58, 0, 30)
+subtitleLabel.BackgroundTransparency = 1
+subtitleLabel.Text = "Trade Controller"
+subtitleLabel.TextColor3 = Color3.fromRGB(150, 100, 200)
+subtitleLabel.TextScaled = false
+subtitleLabel.TextSize = isMobile and 10 or 11
+subtitleLabel.Font = Enum.Font.Gotham
+subtitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+subtitleLabel.ZIndex = 4
+subtitleLabel.Parent = topBar
+
+-- (rest unchanged except branding below)
+
+-- inside toggle print:
+-- replace this line:
+-- print("[Nexio] " .. name .. " -> " .. (state and "ON" or "OFF"))
+
+-- with:
+print("[Arch] " .. name .. " -> " .. (state and "ON" or "OFF"))
+
+-- footer branding:
+local madeByLabel = Instance.new("TextLabel")
+madeByLabel.Size = UDim2.new(1, 0, 0, 16)
+madeByLabel.Position = UDim2.new(0, 0, 0, 4)
+madeByLabel.BackgroundTransparency = 1
+madeByLabel.Text = "Made By Arch"
+madeByLabel.TextColor3 = Color3.fromRGB(160, 100, 220)
+madeByLabel.TextScaled = false
+madeByLabel.TextSize = isMobile and 10 or 11
+madeByLabel.Font = Enum.Font.GothamBold
+madeByLabel.TextXAlignment = Enum.TextXAlignment.Centerlocal titleLabel = Instance.new("ArchPremium")
 titleLabel.Size = UDim2.new(0, 120, 0, 22)
 titleLabel.Position = UDim2.new(0, 58, 0, 8)
 titleLabel.BackgroundTransparency = 1
